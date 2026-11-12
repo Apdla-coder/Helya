@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>حبيبة هاند ميد | Habiba Handmade</title>
+<meta name="description" content="حبيبة هاند ميد — اكسسوارات وأعمال هاند ميد مصنوعة بحب | Habiba Handmade — handcrafted accessories made with love"><meta name="theme-color" content="#b8577a"><meta property="og:type" content="website"><meta property="og:site_name" content="حبيبة هاند ميد | Habiba Handmade"><meta property="og:title" content="حبيبة هاند ميد | Habiba Handmade"><meta property="og:description" content="اكسسوارات وأعمال هاند ميد مصنوعة بحب — توصيل لكل المحافظات | Handcrafted accessories made with love"><meta property="og:locale" content="ar_EG"><meta property="og:locale:alternate" content="en_US">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body>
+<section class="hero"><h1 id="ht"></h1><p id="hs"></p><a class="btn" href="#grid" id="hb"></a></section><div class="tr" id="tr"></div>
+<main class="wrap"><section class="wk" id="wk" hidden><h2 id="wt"></h2><small class="tag" id="ws"></small><div class="cd" id="cd" hidden></div><div class="hz" id="wl"></div></section>
+<h2 class="st" id="t1"></h2><div class="cats" id="cats"></div>
+<div class="tools"><input id="q" oninput="render()"><select id="so" onchange="render()"></select></div><div class="grid" id="grid"></div></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script src="common.js"></script>
+<script>
+let cat='';
+$('t1').textContent=t('cats');$('hb').textContent=t('shop');$('q').placeholder=t('sr');$('tr').innerHTML=t('tr').map(x=>`<span>${x}</span>`).join('');
+$('so').innerHTML=['n','a','d'].map((v,i)=>`<option value="${v}">${t('s'+(i+1))}</option>`).join('');
+function page(){$('ht').textContent=sk('hero_title')||(en?'Handmade accessories with a special touch':'اكسسوارات وهاند ميد بلمسة مميزة');$('hs').textContent=sk('hero_sub')||t('hs');
+ const cs=[...new Set(P.map(p=>p.category))];$('cats').innerHTML=['',...cs].map(c=>`<button class="chip ${c==cat?'on':''}" data-c="${esc(c)}" onclick="cat=this.dataset.c;page()">${c?esc(ct(c)):t('all')}</button>`).join('');
+ const w=P.filter(p=>X(p).weekly&&p.stock>0);$('wk').hidden=!w.length;if(w.length){$('wt').textContent=t('wk');$('ws').textContent=t('wks');$('wl').innerHTML=w.map(card).join('');tick()}render()}
+function render(){const q=$('q').value.trim().toLowerCase(),s=$('so').value;let l=P.filter(p=>(!cat||p.category==cat)&&(!q||(p.name+p.description+nm(p)).toLowerCase().includes(q)));
+ if(s=='a')l.sort((x,y)=>x.price-y.price);if(s=='d')l.sort((x,y)=>y.price-x.price);$('grid').innerHTML=l.map(card).join('')||`<p style="grid-column:1/-1;text-align:center;color:var(--mut)">${t('nores')}</p>`}
+let tm;function tick(){clearInterval(tm);const e=S.week_end&&new Date(S.week_end+'T23:59:59');if(!e||e<new Date()){$('cd').hidden=1;return}
+ const f=()=>{let s=Math.max(0,Math.floor((e-new Date())/1e3));const v=[[86400,'dd'],[3600,'hh'],[60,'mm'],[1,'ss']].map(([n,k])=>{const x=Math.floor(s/n);s%=n;return `<div><b>${String(x).padStart(2,'0')}</b>${t(k)}</div>`});$('cd').innerHTML=v.join('');$('cd').hidden=0};f();tm=setInterval(f,1000)}
+</script></body></html>
